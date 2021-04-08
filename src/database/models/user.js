@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     bio:DataTypes.STRING,
     dob:DataTypes.STRING,
+    refreshToken: DataTypes.TEXT,
     profile_picture: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -27,12 +28,12 @@ module.exports = (sequelize, DataTypes) => {
     address:DataTypes.STRING,
   }, {});
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.Blog, {
-  //     foreignKey: 'authorId'
-  //   });
+  User.associate = (models) => {
+    User.hasMany(models.Blog, {
+      foreignKey: 'authorId'
+    });
 
-  // };
+  };
 
   //  hash user password before creating user
   User.beforeCreate(async (user) => {

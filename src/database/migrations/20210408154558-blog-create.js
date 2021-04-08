@@ -3,54 +3,32 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
    
-     await queryInterface.createTable('Users', { 
+     await queryInterface.createTable('Blogs', { 
        id: {
          type:Sequelize.UUID,
          defaultValue: Sequelize.UUIDV4,
          allowNull: false,
          primaryKey:true,
         },
-       first_name: {
-         type:Sequelize.STRING,
+       authorId: {
+         type:Sequelize.UUID,
          allowNull:false,
+         references: {
+          model: 'Users',
+          key: 'id',
+          ondelete: 'cascade',
+          onupdate: 'cascade'
+        }
         },
-       last_name: {
+       title: {
         type:Sequelize.STRING,
         allowNull:false,
        },
-       username: {
+       description: {
         type:Sequelize.STRING,
         allowNull:false,
        },
-       email: {
-        type:Sequelize.STRING,
-        allowNull:false,
-       },
-       bio: {
-        type:Sequelize.STRING,
-        allowNull:false,
-       },
-       dob: {
-        type:Sequelize.DATE,
-        allowNull:false,
-       },
-       password: {
-        type:Sequelize.STRING,
-        allowNull:false,
-       },
-       refreshToken:{
-        type: Sequelize.TEXT,
-        allowNull: true
-       },
-       address: {
-        type:Sequelize.STRING,
-        allowNull:false,
-       },
-       language: {
-        type:Sequelize.STRING,
-        allowNull:false,
-       },
-       profile_picture: {
+       cover_image: {
         type:Sequelize.STRING,
         allowNull:false,
         defaultValue: 'https://www.cobdoglaps.sa.edu.au/wp-content/uploads/2017/11/placeholder-profile-sq.jpg',
@@ -72,7 +50,8 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
 
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Blogs');
 
   }
 };
+
