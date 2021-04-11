@@ -1,5 +1,6 @@
 import { getUserByEmail, updateRefreshToken } from "../../services/user"
 import { comparePass, generateToken } from "../../utils/auth";
+import { errorResponse } from "../../utils/errorResponse";
 
 
 export const login = async (req,res,next)=>{
@@ -13,11 +14,19 @@ export const login = async (req,res,next)=>{
     if(!checkPass){
         return res.status(400).json({message: "Wrong Password. Please try again!"});
     }
-    const {password, ...tokenData}= user;
+    const {id, username, email:userEmail, first_name, last_name, profile_picture}= user;
+    const tokenData={
+        id, 
+        username, 
+        email:userEmail, 
+        first_name, 
+        last_name, 
+        profile_picture
+    };
     const token= generateToken(tokenData);
     const updateToken= await updateRefreshToken(token, email);
-    if( updateToken.error){
-        return res.status(500).json(updateToken);
+    if( !updateToken ){
+        return errorResponse(res,500,'Faliled to update refresh token')
     }
     return res.status(200).json({
         message: 'Log in successful',

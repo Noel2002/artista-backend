@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid';
 
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Blog = sequelize.define('Skill', {
+  const Skill = sequelize.define('Skill', {
 
     id: {
       allowNull: false,

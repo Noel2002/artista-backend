@@ -27,9 +27,26 @@ export const updateRefreshToken = async (token,email)=>{
           user,
       }
     } catch (error) {
-        return {
-            error: "failed to update token",
-            stack: error.stack || error.message
-        }
+        console.log(error.stack);
     }
-}
+};
+
+export const getUserById = async (id)=>{
+    try {
+        const attributes= ["id","first_name", "last_name","username","profile_picture","email"]
+      const user= await models.User.findOne({attributes, where: {id}, raw:true});  
+      return user;
+    } catch (error) {
+        console.log(error.stack);
+    }
+};
+
+ export const getUserInfo = async (id)=>{
+    try {
+        const attributes= ["id","first_name", "last_name","username","profile_picture","email","bio","dob"]
+      const user= await models.User.findOne({attributes, where: {id}, raw:true});  
+      return user;
+    } catch (error) {
+        console.log(error.stack);
+    }
+};
